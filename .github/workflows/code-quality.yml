@@ -29,7 +29,14 @@ jobs:
         uses: ./.github/composite-actions/prepare
 
       - name: Run ESLint check
-        run: pnpm exec turbo run lint --affected
+        run: |
+          BASE_COMMAND="pnpm exec turbo run lint"
+          if [[ ${{ github.event_name }} == 'pull_request' ]]; then
+            BASE_COMMAND="$BASE_COMMAND --affected"
+          fi
+          echo "Running: $BASE_COMMAND"
+          $BASE_COMMAND
+#        run: pnpm exec turbo run lint --affected
 
   type-check:
     name: Type Check
