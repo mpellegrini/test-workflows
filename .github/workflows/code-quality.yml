@@ -7,7 +7,7 @@ on:
 
 env:
   DO_NOT_TRACK: 1
-  TURBO_SCM_BASE: origin/${{ github.head_ref }}
+#  TURBO_SCM_BASE: origin/${{ github.head_ref }}
 
 jobs:
   lint:
