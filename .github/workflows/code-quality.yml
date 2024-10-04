@@ -5,6 +5,10 @@ on:
       - main
   pull_request:
 
+env:
+  DO_NOT_TRACK: 1
+  TURBO_SCM_BASE: origin/${{ github.base_ref }}
+
 jobs:
   lint:
     name: ESLint
@@ -13,12 +17,14 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Prepare
         uses: ./.github/composite-actions/prepare
 
       - name: Run ESLint check
-        run: pnpm run lint
+        run: pnpm exec turbo run lint --affected
 
   type-check:
     name: Type Check
